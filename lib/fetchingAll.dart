@@ -37,8 +37,9 @@ class _FirstScreenState extends State<FirstScreen> {
                         color: Colors.white,
                         child: Column(
                           children: [
-                            Text(users[index].name),
-                            Text(users[index].gender),
+                            Text("Name :" + users[index].name),
+                            Text("Gender :" + users[index].gender),
+                            Text("Eye Color :" + users[index].eye_color),
                           ],
                         ),
                       );

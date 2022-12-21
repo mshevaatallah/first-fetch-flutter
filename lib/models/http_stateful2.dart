@@ -5,13 +5,15 @@ import 'package:http/http.dart' as http;
 class User {
   String name;
   String gender;
+  String eye_color;
 
-  User({required this.name, required this.gender});
+  User({required this.name, required this.gender, required this.eye_color});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'],
       gender: json['gender'],
+      eye_color: json['eye_color'],
     );
   }
   Future<List<User>> fetchUsers() async {
