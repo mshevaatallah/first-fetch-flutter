@@ -18,7 +18,7 @@ class _FirstScreenState extends State<FirstScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('First Screen'),
+          title: const Text('Fetch All'),
         ),
         body: Container(
           color: Colors.grey,
