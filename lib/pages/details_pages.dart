@@ -18,7 +18,9 @@ class Details extends StatelessWidget {
           children: <Widget>[
             Text("Name :" + user.name),
             Text("Eye Color :" + user.eye_color),
-            Text("Gender :" + user.gender)
+            Text("Gender :" + user.gender),
+            Text("height :" + user.height),
+            Text("Birth Year :" + user.birth_year),
           ],
         ),
       ),
