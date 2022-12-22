@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'models/http_stateful2.dart';
+import 'package:project_1/pages/details_pages.dart';
+import '../models/http_stateful2.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({Key? key}) : super(key: key);
@@ -31,18 +32,33 @@ class _FirstScreenState extends State<FirstScreen> {
                 return ListView.builder(
                     itemCount: users.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.all(8),
-                        padding: EdgeInsets.all(8),
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Text("Name :" + users[index].name),
-                            Text("Gender :" + users[index].gender),
-                            Text("Eye Color :" + users[index].eye_color),
-                          ],
-                        ),
-                      );
+                      return Card(
+                          margin: EdgeInsets.all(8),
+                          color: Colors.white,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      Details(user: users[index]),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Text("Name :" + users[index].name),
+                                Text("Gender :" + users[index].gender),
+                                Text("Eye Color :" + users[index].eye_color),
+                              ],
+                            ),
+                          )
+                          // shape: () {
+                          //   Navigator.pushNamed(context, '/details',
+                          //       arguments: users[index]);
+                          // },
+
+                          );
                     });
               }
               if (snapshot.hasError) {

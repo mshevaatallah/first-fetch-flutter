@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'package:project_1/fetching.dart';
-import 'package:project_1/fetchingAll.dart';
+import 'package:project_1/pages/fetching.dart';
+import 'package:project_1/pages/fetchingAll.dart';
 
 void main() {
   runApp(const MyApp());
