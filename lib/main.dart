@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:project_1/pages/fetching.dart';
 import 'package:project_1/pages/fetchingAll.dart';
+import 'package:project_1/pages/login_form.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Swapi App'),
+      home: const Login(),
     );
   }
 }

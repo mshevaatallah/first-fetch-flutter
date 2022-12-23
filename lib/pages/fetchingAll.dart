@@ -24,51 +24,67 @@ class _FirstScreenState extends State<FirstScreen> {
         body: Container(
           color: Colors.grey,
           padding: const EdgeInsets.all(8),
-          child: FutureBuilder<List<User>>(
-            future: fetchUsers(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<User> users = snapshot.data as List<User>;
-                return ListView.builder(
-                    itemCount: users.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                          margin: EdgeInsets.all(8),
-                          color: Colors.white,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      Details(user: users[index]),
-                                ),
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                Text("Name :" + users[index].name),
-                                Text("Gender :" + users[index].gender),
-                                Text("Eye Color :" + users[index].eye_color),
-                              ],
-                            ),
-                          )
-                          // shape: () {
-                          //   Navigator.pushNamed(context, '/details',
-                          //       arguments: users[index]);
-                          // },
+          child: Column(
+            children: [
+              FutureBuilder<List<User>>(
+                future: fetchUsers(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<User> users = snapshot.data as List<User>;
+                    return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: users.length,
 
+                        // ignore: dead_code
+                        itemBuilder: (context, index) {
+                          return Card(
+                            margin: EdgeInsets.all(8),
+                            color: Colors.white,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Details(user: users[index]),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Text("Name :" + users[index].name),
+                                  Text("Gender :" + users[index].gender),
+                                  Text("Eye Color :" + users[index].eye_color),
+                                ],
+                              ),
+                            ),
+
+                            // shape: () {
+                            //   Navigator.pushNamed(context, '/details',
+                            //       arguments: users[index]);
+                            // },
                           );
-                    });
-              }
-              if (snapshot.hasError) {
-                print(snapshot.error.toString());
-                return Text('error');
-              }
-              return CircularProgressIndicator();
-            },
+                        });
+                  }
+                  if (snapshot.hasError) {
+                    print(snapshot.error.toString());
+                    return Text('error');
+                  }
+                  return CircularProgressIndicator();
+                },
+              ),
+              //add text widget here
+              Text("Nama")
+            ],
           ),
-        ));
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              
+            },
+            child: const Icon(Icons.add),
+            backgroundColor: Colors.green));
   }
 
   Future<List<User>> fetchUsers() async {
