@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_1/models/user_models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
   login(String username, String password) async {
@@ -14,9 +17,29 @@ class AuthServices {
         }));
     if (res.statusCode == 200) {
       print("correct");
-      print(res.body);
+      var response = json.decode(res.body);
+      String token = (response["token"]);
+
+      final localstorage = await SharedPreferences.getInstance();
+      localstorage.setString("token", token);
     } else {
-      print("password salah");
+      AlertDialog(
+        title: const Text('ERROR'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              Text('This is a demo alert dialog.'),
+              Text('Would you like to approve of this message?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Approve'),
+            onPressed: () {},
+          ),
+        ],
+      );
     }
 
     //   var res = await http.post(url, body: {
