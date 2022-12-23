@@ -15,16 +15,26 @@ class AuthServices {
           'username': username,
           'password': password,
         }));
+    print(res.statusCode);
+    print(res.body);
     if (res.statusCode == 200) {
-      print("correct");
-      var response = json.decode(res.body);
-      String token = (response["token"]);
-
       final localstorage = await SharedPreferences.getInstance();
+      var response = json.decode(res.body);
+
+      String token = (response["token"]);
       localstorage.setString("token", token);
-      localstorage.setBool("isLogin", true);
+      return true;
+
+      // localstorage.setBool("isLogin", true);
+      // print("correct");
+      // var response = json.decode(res.body);
+
+      // String token = (response["token"]);
+
     } else {
-      bool isLogin = false;
+      return false;
+      // final localstorage = await SharedPreferences.getInstance();
+      // localstorage.setBool("isLogin", false);
     }
 
     //   var res = await http.post(url, body: {

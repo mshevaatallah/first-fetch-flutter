@@ -93,7 +93,7 @@ class _FirstScreenState extends State<FirstScreen> {
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => Login()));
             },
-            child: const Text("logout"),
+            child: const Text("Logout"),
             backgroundColor: Colors.green));
   }
 

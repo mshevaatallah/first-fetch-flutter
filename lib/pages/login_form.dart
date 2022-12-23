@@ -47,24 +47,32 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _password = new TextEditingController();
 
   Future loginn() async {
-    auth.login(_username.text, _password.text);
-    print(_username.text);
-    print(_password.text);
+    await auth.login(_username.text, _password.text).then((value) {
+      if (value) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => FirstScreen()));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Invalid credentials")));
+      }
+    });
+    // print(_username.text);
+    // print(_password.text);
 
-    final localstorage = await SharedPreferences.getInstance();
+    // final localstorage = await SharedPreferences.getInstance();
 
-    var token = localstorage.getString("token");
-    bool? isLogin = localstorage.getBool("isLogin");
-    if (_username.text == "" && _password.text == "") {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("wajib disiii")));
-    } else if (isLogin == false) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Invalid credentials")));
-    } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => FirstScreen()));
-    }
+    // var token = localstorage.getString("token");
+    // var isLogin = localstorage.getBool("isLogin");
+    // if (isLogin == true) {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => FirstScreen()));
+    // } else if (_username.text == "" && _password.text == "") {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: Text("wajib disiii")));
+    // } else {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: Text("Invalid credentials")));
+    // }
   }
 
   @override
@@ -102,12 +110,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                 // Validate returns true if the form is valid, or false otherwise.
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a snackbar. In the real world,
+                  loginn();
                   // you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
                   );
                 }
-                loginn();
               },
               child: const Text('Submit'),
             ),
