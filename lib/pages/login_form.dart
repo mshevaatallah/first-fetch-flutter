@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:project_1/pages/fetchingAll.dart';
 import 'package:project_1/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -44,10 +46,25 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _username = new TextEditingController();
   final _password = new TextEditingController();
 
-  loginn() {
+  Future loginn() async {
     auth.login(_username.text, _password.text);
     print(_username.text);
     print(_password.text);
+
+    final localstorage = await SharedPreferences.getInstance();
+
+    var token = localstorage.getString("token");
+    bool? isLogin = localstorage.getBool("isLogin");
+    if (_username.text == "" && _password.text == "") {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("wajib disiii")));
+    } else if (isLogin == false) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Invalid credentials")));
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => FirstScreen()));
+    }
   }
 
   @override
@@ -89,8 +106,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
                   );
-                  loginn();
                 }
+                loginn();
               },
               child: const Text('Submit'),
             ),

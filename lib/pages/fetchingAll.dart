@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:project_1/pages/details_pages.dart';
+import 'package:project_1/pages/login_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_stateful2.dart';
 
 class FirstScreen extends StatefulWidget {
@@ -80,10 +82,18 @@ class _FirstScreenState extends State<FirstScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              
+            onPressed: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              setState(() {
+                preferences.remove('token');
+                preferences.remove('isLogin');
+              });
+
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Login()));
             },
-            child: const Icon(Icons.add),
+            child: const Text("logout"),
             backgroundColor: Colors.green));
   }
 

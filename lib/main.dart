@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:project_1/pages/auth_pages.dart';
 import 'dart:math';
 
 import 'package:project_1/pages/fetching.dart';
 import 'package:project_1/pages/fetchingAll.dart';
 import 'package:project_1/pages/login_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  var token = prefs.getString("token");
+  runApp(MaterialApp(home: token == null ? Login() : FirstScreen()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -29,7 +40,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const Login(),
+      home: const AuthPages(),
     );
   }
 }
