@@ -95,6 +95,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             controller: _password,
+            obscureText: true,
             // The validator receives the text that the user has entered.
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -103,9 +104,13 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            width: double.infinity,
+            height: 50,
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: OutlinedButton.icon(
+              icon: Icon(Icons.login),
               onPressed: () {
                 // Validate returns true if the form is valid, or false otherwise.
                 if (_formKey.currentState!.validate()) {
@@ -117,7 +122,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   );
                 }
               },
-              child: const Text('Submit'),
+              label: const Text('Submit'),
             ),
           ),
         ],
