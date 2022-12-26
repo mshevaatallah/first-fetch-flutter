@@ -84,6 +84,11 @@ class MyCustomFormState extends State<MyCustomForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            decoration: const InputDecoration(
+              icon: Icon(Icons.person),
+              hintText: 'Masukan Username',
+              labelText: 'Username',
+            ),
             controller: _username,
             // The validator receives the text that the user has entered.
             validator: (value) {
@@ -95,6 +100,11 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             controller: _password,
+            decoration: const InputDecoration(
+              icon: Icon(Icons.lock),
+              hintText: 'Masukan Password',
+              labelText: 'Password',
+            ),
             obscureText: true,
             // The validator receives the text that the user has entered.
             validator: (value) {
@@ -122,7 +132,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   );
                 }
               },
-              label: const Text('Submit'),
+              label: const Text('Login'),
             ),
           ),
         ],
