@@ -5,8 +5,41 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+Products productsFromMap(String str) => Products.fromMap(json.decode(str));
+
+String productsToMap(Products data) => json.encode(data.toMap());
+
 class Products {
   Products({
+    required this.products,
+    required this.total,
+    required this.skip,
+    required this.limit,
+  });
+
+  final List<Product> products;
+  final int total;
+  final int skip;
+  final int limit;
+
+  factory Products.fromMap(Map<String, dynamic> json) => Products(
+        products:
+            List<Product>.from(json["products"].map((x) => Product.fromMap(x))),
+        total: json["total"],
+        skip: json["skip"],
+        limit: json["limit"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "products": List<dynamic>.from(products.map((x) => x.toMap())),
+        "total": total,
+        "skip": skip,
+        "limit": limit,
+      };
+}
+
+class Product {
+  Product({
     required this.id,
     required this.title,
     required this.description,
@@ -20,23 +53,19 @@ class Products {
     required this.images,
   });
 
-  int id;
-  String title;
-  String description;
-  int price;
-  double discountPercentage;
-  double rating;
-  int stock;
-  String brand;
-  String category;
-  String thumbnail;
-  List<String> images;
+  final int id;
+  final String title;
+  final String description;
+  final int price;
+  final double discountPercentage;
+  final double rating;
+  final int stock;
+  final String brand;
+  final String category;
+  final String thumbnail;
+  final List<String> images;
 
-  factory Products.fromJson(String str) => Products.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Products.fromMap(Map<String, dynamic> json) => Products(
+  factory Product.fromMap(Map<String, dynamic> json) => Product(
         id: json["id"],
         title: json["title"],
         description: json["description"],

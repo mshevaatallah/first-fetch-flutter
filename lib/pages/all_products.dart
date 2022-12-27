@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_1/models/product_models.dart';
+import 'package:project_1/pages/login_form.dart';
 import 'package:project_1/services/people_services.dart';
 import 'package:project_1/services/products_service.dart';
 import 'package:project_1/widget/custom_loader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ListPeople extends StatefulWidget {
   const ListPeople({Key? key}) : super(key: key);
@@ -13,14 +15,14 @@ class ListPeople extends StatefulWidget {
 
 class _ListPeopleState extends State<ListPeople> {
   ProductService productService = ProductService();
-  List<Products> listPeople = [];
+  List<Product> listPeople = [];
 
   bool isLoading = true;
 
   getPeopleList() async {
     await productService.getItem().then((value) {
       setState(() {
-        listPeople = value as List<Products>;
+        listPeople = value.products;
         isLoading = false;
       });
     });
@@ -36,7 +38,7 @@ class _ListPeopleState extends State<ListPeople> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('List People'),
+        title: const Text('List Products'),
       ),
       body: isLoading
           ? const CustomLoader()
@@ -61,14 +63,27 @@ class _ListPeopleState extends State<ListPeople> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Gender: ${listPeople[i].description}'),
-                            Text('Height: ${listPeople[i].price}'),
+                            Text('Desc: ${listPeople[i].description}'),
+                            Text('Price: ${listPeople[i].price}'),
                           ],
                         ),
                       ),
                     );
                   }),
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          setState(() {
+            preferences.remove('token');
+            preferences.remove('isLogin');
+          });
+
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Login()));
+        },
+        child: const Icon(Icons.logout),
+      ),
     );
   }
 }
