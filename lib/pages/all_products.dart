@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:project_1/models/product_models.dart';
+import 'package:project_1/services/people_services.dart';
 import 'package:project_1/services/products_service.dart';
 import 'package:project_1/widget/custom_loader.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({Key? key}) : super(key: key);
+class ListPeople extends StatefulWidget {
+  const ListPeople({Key? key}) : super(key: key);
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  _ListPeopleState createState() => _ListPeopleState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _ListPeopleState extends State<ListPeople> {
   ProductService productService = ProductService();
-  List<Products> listProducts = [];
+  List<Products> listPeople = [];
+
   bool isLoading = true;
+
+  getPeopleList() async {
+    await productService.getItem().then((value) {
+      setState(() {
+        listPeople = value as List<Products>;
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPeopleList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +43,7 @@ class _MyWidgetState extends State<MyWidget> {
           : Container(
               padding: const EdgeInsets.all(10),
               child: ListView.builder(
-                  itemCount: listProducts.length,
+                  itemCount: listPeople.length,
                   itemBuilder: (context, i) {
                     return Card(
                       elevation: 10,
@@ -38,15 +54,15 @@ class _MyWidgetState extends State<MyWidget> {
                         onTap: () {},
                         isThreeLine: true,
                         title: Text(
-                          listProducts[i].title,
+                          listPeople[i].title,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Gender: ${listProducts[i].price}'),
-                            Text('Height: ${listProducts[i].description}'),
+                            Text('Gender: ${listPeople[i].description}'),
+                            Text('Height: ${listPeople[i].price}'),
                           ],
                         ),
                       ),

@@ -2,7 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:project_1/models/product_models.dart';
 
 class ProductService {
-  Future<Products> getItem() async {
+  Future<Products?> getItem() async {
+    Products? products;
     var data;
     try {
       var response = await http.get(
@@ -10,6 +11,7 @@ class ProductService {
       );
       if (response.statusCode == 200) {
         data = Products.fromJson(response.body);
+        print(data);
         return data;
       }
       return data;

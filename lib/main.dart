@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_1/pages/all_products.dart';
 import 'package:project_1/pages/auth_pages.dart';
 import 'dart:math';
 
@@ -12,7 +13,7 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   var token = prefs.getString("token");
-  runApp(MaterialApp(home: token == null ? Login() : FirstScreen()));
+  runApp(MaterialApp(home: token == null ? Login() : ListPeople()));
 }
 
 class MyApp extends StatefulWidget {

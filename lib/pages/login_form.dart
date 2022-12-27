@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:project_1/pages/all_products.dart';
 import 'package:project_1/pages/fetchingAll.dart';
 import 'package:project_1/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,7 +51,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     await auth.login(_username.text, _password.text).then((value) {
       if (value) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => FirstScreen()));
+            context, MaterialPageRoute(builder: (context) => ListPeople()));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Invalid credentials")));
